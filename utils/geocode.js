@@ -6,16 +6,16 @@ const geocode = (address, callback) => {
     address +
     ".json?access_token=pk.eyJ1Ijoic3llZDAwNyIsImEiOiJja2xqbWExY2cyaTNiMm9tbGlmNHl1NGdjIn0.BrnDmKAusXRjmD27yFXagg&limit=1";
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("unable to connect !", undefined);
-    } else if (response.body.features.length === 0) {
+    } else if (body.features.length === 0) {
       callback("unable to find location try again !", undefined);
     } else {
       callback(undefined, {
-        latitude: response.body.features[0].center[1],
-        longitude: response.body.features[0].center[0],
-        location: response.body.features[0].place_name,
+        latitude: body.features[0].center[1],
+        longitude: body.features[0].center[0],
+        location: body.features[0].place_name,
       });
     }
   });
